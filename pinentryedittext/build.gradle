@@ -9,8 +9,8 @@ ext {
 
     libraryDescription = 'An EditText that looks like a pin entry field. It is highly customisable and even animated text.'
 
-    siteUrl = 'https://github.com/alphamu/AnimatedEditText'
-    gitUrl = 'https://github.com/alphamu/AnimatedEditText.git'
+    siteUrl = 'https://github.com/alphamu/PinEntryEditText'
+    gitUrl = 'https://github.com/alphamu/PinEntryEditText.git'
 
     libraryVersion = '1.0'
 
