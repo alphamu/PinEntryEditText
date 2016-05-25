@@ -9,8 +9,9 @@ of `EditText` and implement features that are otherwise not available.
 
 ### PinEntryEditText
 
+- Number of pin characters is configurable. You can use the `maxLength` property to define however long you want your pin to be.
 - PinEntryEditText which supports text animating in.
-- Lets you specify any character to be used as a mask for input.
+- Lets you specify any unicode character to be used as a mask for input.
 - Specify drawable as the foreground/background.
 
 ## Usage
