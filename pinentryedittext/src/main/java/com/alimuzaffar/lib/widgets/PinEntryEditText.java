@@ -487,19 +487,4 @@ public class PinEntryEditText extends EditText {
     public interface OnPinEnteredListener {
         void onPinEntered(CharSequence str);
     }
-
-    abstract class AnimationEndListener implements Animator.AnimatorListener {
-
-        @Override
-        public void onAnimationStart(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-        }
-    }
 }
