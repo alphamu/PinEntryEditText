@@ -43,7 +43,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class PinEntryEditText extends EditText {
-    public static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
+    private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
     private String mMask = null;
     private StringBuilder mMaskChars = null;
@@ -70,21 +70,21 @@ public class PinEntryEditText extends EditText {
     private boolean mAnimate = false;
     private boolean mHasError = false;
     private ColorStateList mOriginalTextColors;
-    int[][] mStates = new int[][]{
+    private int[][] mStates = new int[][]{
             new int[]{android.R.attr.state_selected}, // selected
             new int[]{android.R.attr.state_active}, // error
             new int[]{android.R.attr.state_focused}, // focused
             new int[]{-android.R.attr.state_focused}, // unfocused
     };
 
-    int[] mColors = new int[]{
+    private int[] mColors = new int[]{
             Color.GREEN,
             Color.RED,
             Color.BLACK,
             Color.GRAY
     };
 
-    ColorStateList mColorStates = new ColorStateList(mStates, mColors);
+    private ColorStateList mColorStates = new ColorStateList(mStates, mColors);
 
     public PinEntryEditText(Context context) {
         super(context);
@@ -357,6 +357,9 @@ public class PinEntryEditText extends EditText {
         return mHasError;
     }
 
+    /**
+     * Request focus on this PinEntryEditText
+     */
     public void focus() {
         requestFocus();
 
