@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alimuzaffar.lib.widgets">
+    package="com.alimuzaffar.lib.pin">
 
     <application
         android:allowBackup="true"

@@ -33,7 +33,7 @@ details. Read more about
 ### Setup PinEntryEditText in your layout
 
 ```xml
-<com.alimuzaffar.lib.widgets.PinEntryEditText
+<com.alimuzaffar.lib.pin.PinEntryEditText
     android:id="@+id/txt_pin_entry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

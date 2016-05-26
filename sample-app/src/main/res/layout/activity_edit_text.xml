@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
-        <com.alimuzaffar.lib.widgets.PinEntryEditText
+        <com.alimuzaffar.lib.pin.PinEntryEditText
             android:background="@null"
             android:id="@+id/txt_pin_entry"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:visibility="visible"
             app:pinLineColors="@color/pin_line_colors" />
 
-        <com.alimuzaffar.lib.widgets.PinEntryEditText
+        <com.alimuzaffar.lib.pin.PinEntryEditText
             android:background="@null"
             android:id="@+id/txt_pin_entry1"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             app:pinAnimationType="fromBottom"
             app:pinBackgroundDrawable="@drawable/bg_pin" />
 
-        <com.alimuzaffar.lib.widgets.PinEntryEditText
+        <com.alimuzaffar.lib.pin.PinEntryEditText
             android:background="@null"
             android:id="@+id/txt_pin_entry2"
             android:layout_width="112dp"
