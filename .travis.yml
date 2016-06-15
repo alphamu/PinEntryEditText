@@ -1,0 +1,42 @@
+language: android
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-23.0.3
+    - android-23
+    - extra-android-m2repository
+    - extra-android-support
+
+  licenses:
+  - 'android-sdk-license.*'
+
+jdk:
+  - oraclejdk8
+
+branches:
+  only:
+    - develop
+    - master
+    - /^alpha.*$/
+    - /^beta.*$/
+    - /^release.*$/
+
+notifications:
+  email: false
+
+sudo: false
+
+before_install:
+- export ANDROID_HOME=/usr/local/android-sdk
+- echo "sdk.dir=$ANDROID_HOME" > local.properties
+script: 'travis_retry ./gradlew assembleRelease'
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/

@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText) 
+[![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion)
+
 # PinEntryEditText for Android
 
 This repository contains `PinEntryEditText` which extends the behaviour
