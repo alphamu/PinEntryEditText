@@ -30,6 +30,8 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.text.TextUtilsCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -41,6 +43,8 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import java.util.Locale;
 
 public class PinEntryEditText extends EditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
@@ -226,6 +230,12 @@ public class PinEntryEditText extends EditText {
         mCharBottom = new float[(int) mNumChars];
         int startX = getPaddingLeft();
         int bottom = getHeight() - getPaddingBottom();
+        int rtlFlag = 1;
+        final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
+        if (isLayoutRtl) {
+            rtlFlag = -1 * rtlFlag;
+            startX = (int) (getWidth() - getPaddingRight() - mCharSize);
+        }
         for (int i = 0; i < mNumChars; i++) {
             mLineCoords[i] = new RectF(startX, bottom, startX + mCharSize, bottom);
             if (mPinBackground != null) {
@@ -238,9 +248,9 @@ public class PinEntryEditText extends EditText {
             }
 
             if (mSpace < 0) {
-                startX += mCharSize * 2;
+                startX += rtlFlag * mCharSize * 2;
             } else {
-                startX += mCharSize + mSpace;
+                startX += rtlFlag * (mCharSize + mSpace);
             }
             mCharBottom[i] = mLineCoords[i].bottom - mTextBottomPadding;
         }
