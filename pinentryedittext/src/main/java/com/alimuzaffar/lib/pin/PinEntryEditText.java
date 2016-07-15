@@ -220,7 +220,7 @@ public class PinEntryEditText extends EditText {
             mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
             mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
         }
-        int availableWidth = getWidth() - getPaddingRight() - getPaddingLeft();
+        int availableWidth = getWidth() - ViewCompat.getPaddingEnd(this) - ViewCompat.getPaddingStart(this);
         if (mSpace < 0) {
             mCharSize = (availableWidth / (mNumChars * 2 - 1));
         } else {
@@ -228,13 +228,13 @@ public class PinEntryEditText extends EditText {
         }
         mLineCoords = new RectF[(int) mNumChars];
         mCharBottom = new float[(int) mNumChars];
-        int startX = getPaddingLeft();
+        int startX = ViewCompat.getPaddingStart(this);
         int bottom = getHeight() - getPaddingBottom();
         int rtlFlag = 1;
         final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
         if (isLayoutRtl) {
             rtlFlag = -1 * rtlFlag;
-            startX = (int) (getWidth() - getPaddingRight() - mCharSize);
+            startX = (int) (getWidth() - ViewCompat.getPaddingEnd(this) - mCharSize);
         }
         for (int i = 0; i < mNumChars; i++) {
             mLineCoords[i] = new RectF(startX, bottom, startX + mCharSize, bottom);
