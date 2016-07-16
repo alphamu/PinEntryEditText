@@ -230,18 +230,14 @@ public class PinEntryEditText extends EditText {
         mCharBottom = new float[(int) mNumChars];
         int startX;
         int bottom = getHeight() - getPaddingBottom();
-        int rtlFlag = 1;
+        int rtlFlag;
         final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
-        // can't support rtl
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            startX = getPaddingLeft();
+        if (isLayoutRtl) {
+            rtlFlag = -1;
+            startX = (int) (getWidth() - ViewCompat.getPaddingStart(this) - mCharSize);
         } else {
-            if (isLayoutRtl) {
-                rtlFlag = -1 * rtlFlag;
-                startX = (int) (getWidth() - ViewCompat.getPaddingStart(this) - mCharSize);
-            } else {
-                startX = ViewCompat.getPaddingStart(this);
-            }
+            rtlFlag = 1;
+            startX = ViewCompat.getPaddingStart(this);
         }
         for (int i = 0; i < mNumChars; i++) {
             mLineCoords[i] = new RectF(startX, bottom, startX + mCharSize, bottom);
