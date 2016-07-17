@@ -28,7 +28,7 @@ details. Read more about
 ### Gradle
 
     dependencies {
-        compile 'com.alimuzaffar.lib:pinentryedittext:1.0'
+        compile 'com.alimuzaffar.lib:pinentryedittext:1.1'
     }
 
 ## STEP-2
