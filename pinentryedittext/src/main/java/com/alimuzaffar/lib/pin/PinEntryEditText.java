@@ -51,6 +51,7 @@ public class PinEntryEditText extends EditText {
 
     private String mMask = null;
     private StringBuilder mMaskChars = null;
+    private String mSingleCharHint = null;
     private int mAnimatedType = 0;
     private float mSpace = 24; //24 dp by default, space between the lines
     private float mCharSize;
@@ -61,6 +62,7 @@ public class PinEntryEditText extends EditText {
     private float[] mCharBottom;
     private Paint mCharPaint;
     private Paint mLastCharPaint;
+    private Paint mSingleCharPaint;
     private Drawable mPinBackground;
     private Rect mTextHeight = new Rect();
     private boolean mIsDigitSquare = false;
@@ -123,6 +125,7 @@ public class PinEntryEditText extends EditText {
             ta.getValue(R.styleable.PinEntryEditText_pinAnimationType, outValue);
             mAnimatedType = outValue.data;
             mMask = ta.getString(R.styleable.PinEntryEditText_pinCharacterMask);
+            mSingleCharHint = ta.getString(R.styleable.PinEntryEditText_pinRepeatedHint);
             mLineStroke = ta.getDimension(R.styleable.PinEntryEditText_pinLineStroke, mLineStroke);
             mLineStrokeSelected = ta.getDimension(R.styleable.PinEntryEditText_pinLineStrokeSelected, mLineStrokeSelected);
             mSpace = ta.getDimension(R.styleable.PinEntryEditText_pinCharacterSpacing, mSpace);
@@ -139,6 +142,7 @@ public class PinEntryEditText extends EditText {
 
         mCharPaint = new Paint(getPaint());
         mLastCharPaint = new Paint(getPaint());
+        mSingleCharPaint = new Paint(getPaint());
         mLinesPaint = new Paint(getPaint());
         mLinesPaint.setStrokeWidth(mLineStroke);
 
@@ -219,6 +223,7 @@ public class PinEntryEditText extends EditText {
         if (mOriginalTextColors != null) {
             mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
             mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
+            mSingleCharPaint.setColor(getCurrentHintTextColor());
         }
         int availableWidth = getWidth() - ViewCompat.getPaddingEnd(this) - ViewCompat.getPaddingStart(this);
         if (mSpace < 0) {
@@ -277,6 +282,14 @@ public class PinEntryEditText extends EditText {
         float[] textWidths = new float[textLength];
         getPaint().getTextWidths(text, 0, textLength, textWidths);
 
+        float hintWidth = 0;
+        if (mSingleCharHint != null) {
+            float[] hintWidths = new float[mSingleCharHint.length()];
+            getPaint().getTextWidths(mSingleCharHint, hintWidths);
+            for (float i : hintWidths) {
+                hintWidth += i;
+            }
+        }
         for (int i = 0; i < mNumChars; i++) {
             //If a background for the pin characters is specified, it should be behind the characters.
             if (mPinBackground != null) {
@@ -284,13 +297,15 @@ public class PinEntryEditText extends EditText {
                 mPinBackground.setBounds((int) mLineCoords[i].left, (int) mLineCoords[i].top, (int) mLineCoords[i].right, (int) mLineCoords[i].bottom);
                 mPinBackground.draw(canvas);
             }
+            float middle = mLineCoords[i].left + mCharSize / 2;
             if (textLength > i) {
-                float middle = mLineCoords[i].left + mCharSize / 2;
                 if (!mAnimate || i != textLength - 1) {
                     canvas.drawText(text, i, i + 1, middle - textWidths[i] / 2, mCharBottom[i], mCharPaint);
                 } else {
                     canvas.drawText(text, i, i + 1, middle - textWidths[i] / 2, mCharBottom[i], mLastCharPaint);
                 }
+            } else if (mSingleCharHint != null) {
+                canvas.drawText(mSingleCharHint, middle - hintWidth / 2, mCharBottom[i], mSingleCharPaint);
             }
             //The lines should be in front of the text (because that's how I want it).
             if (mPinBackground == null) {

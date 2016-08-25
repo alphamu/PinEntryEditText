@@ -49,6 +49,7 @@ details. Read more about
     app:pinBackgroundDrawable="@drawable/bg_pin" //optional, use your own pin char background
     app:pinAnimationType="popIn|fromBottom|none" //optional, default popIn
 	app:pinCharacterMask="*" //optional, default bullet
+	app:pinSingleCharHint="#" //optional, hint for each characters
 	app:pinTextBottomPadding="@dimen/space" //optional, space between character and bottom line.
 	app:pinLineStroke="2dp" //the stroke (height) of the bottom line by default.
 	app:pinLineStrokeSelected="4dp" //the stroke (height) of the bottom line when field is focused.
