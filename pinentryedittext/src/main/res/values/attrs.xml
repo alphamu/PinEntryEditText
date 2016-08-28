@@ -7,6 +7,7 @@
             <enum name="none" value="-1" />
         </attr>
         <attr name="pinCharacterMask" format="string" />
+        <attr name="pinRepeatedHint" format="string" />
         <attr name="pinLineStroke" format="dimension" />
         <attr name="pinLineStrokeSelected" format="dimension" />
         <attr name="pinCharacterSpacing" format="dimension" />

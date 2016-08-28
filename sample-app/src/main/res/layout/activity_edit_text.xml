@@ -63,5 +63,19 @@
             app:pinBackgroundIsSquare="true"
             app:pinTextBottomPadding="4dp" />
 
+        <com.alimuzaffar.lib.pin.PinEntryEditText
+            android:background="@null"
+            android:id="@+id/txt_pin_entry3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:layout_marginTop="32dp"
+            android:maxLength="10"
+            android:textIsSelectable="false"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:pinRepeatedHint="#"
+            app:pinCharacterSpacing="6dp"
+            app:pinLineColors="@color/pin_line_colors" />
     </LinearLayout>
 </ScrollView>
