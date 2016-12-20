@@ -49,48 +49,48 @@ import java.util.Locale;
 public class PinEntryEditText extends EditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
-    private String mMask = null;
-    private StringBuilder mMaskChars = null;
-    private String mSingleCharHint = null;
-    private int mAnimatedType = 0;
-    private float mSpace = 24; //24 dp by default, space between the lines
-    private float mCharSize;
-    private float mNumChars = 4;
-    private float mTextBottomPadding = 8; //8dp by default, height of the text from our lines
-    private int mMaxLength = 4;
-    private RectF[] mLineCoords;
-    private float[] mCharBottom;
-    private Paint mCharPaint;
-    private Paint mLastCharPaint;
-    private Paint mSingleCharPaint;
-    private Drawable mPinBackground;
-    private Rect mTextHeight = new Rect();
-    private boolean mIsDigitSquare = false;
+    protected String mMask = null;
+    protected StringBuilder mMaskChars = null;
+    protected String mSingleCharHint = null;
+    protected int mAnimatedType = 0;
+    protected float mSpace = 24; //24 dp by default, space between the lines
+    protected float mCharSize;
+    protected float mNumChars = 4;
+    protected float mTextBottomPadding = 8; //8dp by default, height of the text from our lines
+    protected int mMaxLength = 4;
+    protected RectF[] mLineCoords;
+    protected float[] mCharBottom;
+    protected Paint mCharPaint;
+    protected Paint mLastCharPaint;
+    protected Paint mSingleCharPaint;
+    protected Drawable mPinBackground;
+    protected Rect mTextHeight = new Rect();
+    protected boolean mIsDigitSquare = false;
 
-    private OnClickListener mClickListener;
-    private OnPinEnteredListener mOnPinEnteredListener = null;
+    protected OnClickListener mClickListener;
+    protected OnPinEnteredListener mOnPinEnteredListener = null;
 
-    private float mLineStroke = 1; //1dp by default
-    private float mLineStrokeSelected = 2; //2dp by default
-    private Paint mLinesPaint;
-    private boolean mAnimate = false;
-    private boolean mHasError = false;
-    private ColorStateList mOriginalTextColors;
-    private int[][] mStates = new int[][]{
+    protected float mLineStroke = 1; //1dp by default
+    protected float mLineStrokeSelected = 2; //2dp by default
+    protected Paint mLinesPaint;
+    protected boolean mAnimate = false;
+    protected boolean mHasError = false;
+    protected ColorStateList mOriginalTextColors;
+    protected int[][] mStates = new int[][]{
             new int[]{android.R.attr.state_selected}, // selected
             new int[]{android.R.attr.state_active}, // error
             new int[]{android.R.attr.state_focused}, // focused
             new int[]{-android.R.attr.state_focused}, // unfocused
     };
 
-    private int[] mColors = new int[]{
+    protected int[] mColors = new int[]{
             Color.GREEN,
             Color.RED,
             Color.BLACK,
             Color.GRAY
     };
 
-    private ColorStateList mColorStates = new ColorStateList(mStates, mColors);
+    protected ColorStateList mColorStates = new ColorStateList(mStates, mColors);
 
     public PinEntryEditText(Context context) {
         super(context);
@@ -347,7 +347,7 @@ public class PinEntryEditText extends EditText {
      * @param hasTextOrIsNext Is the color for a character that has been typed or is
      *                        the next character to be typed?
      */
-    private void updateColorForLines(boolean hasTextOrIsNext) {
+    protected void updateColorForLines(boolean hasTextOrIsNext) {
         if (mHasError) {
             mLinesPaint.setColor(getColorForState(android.R.attr.state_active));
         } else if (isFocused()) {
@@ -362,7 +362,7 @@ public class PinEntryEditText extends EditText {
         }
     }
 
-    private void updateDrawableState(boolean hasText, boolean isNext) {
+    protected void updateDrawableState(boolean hasText, boolean isNext) {
         if (mHasError) {
             mPinBackground.setState(new int[]{android.R.attr.state_active});
         } else if (isFocused()) {
