@@ -20,7 +20,6 @@
             android:cursorVisible="false"
             android:digits="1234567890"
             android:inputType="number"
-            android:maxLength="4"
             android:textIsSelectable="false"
             android:textSize="20sp"
             android:visibility="visible"
