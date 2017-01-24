@@ -112,6 +112,11 @@ public class PinEntryEditText extends EditText {
         init(context, attrs);
     }
 
+    public void setMaxLength(final int maxLength) {
+        mMaxLength = maxLength;
+        mNumChars = maxLength;
+    }
+
     private void init(Context context, AttributeSet attrs) {
         float multi = context.getResources().getDisplayMetrics().density;
         mLineStroke = multi * mLineStroke;
