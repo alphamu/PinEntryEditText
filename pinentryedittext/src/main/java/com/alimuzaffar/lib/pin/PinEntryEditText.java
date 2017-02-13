@@ -32,6 +32,7 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.view.ViewCompat;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -110,6 +111,16 @@ public class PinEntryEditText extends EditText {
     public PinEntryEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
+    }
+
+    public void setMaxLength(final int maxLength) {
+        mMaxLength = maxLength;
+        mNumChars = maxLength;
+
+        setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+
+        setText(null);
+        invalidate();
     }
 
     private void init(Context context, AttributeSet attrs) {
