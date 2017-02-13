@@ -118,6 +118,9 @@ public class PinEntryEditText extends EditText {
         mNumChars = maxLength;
 
         setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+
+        setText(null);
+        invalidate();
     }
 
     private void init(Context context, AttributeSet attrs) {
