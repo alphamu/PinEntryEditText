@@ -23,12 +23,26 @@ Below is a fast guide to getting started. However, if you need to read about the
 details. Read more about
 [PinEntryEditText](https://medium.com/@ali.muzaffar/building-a-pinentryedittext-in-android-5f2eddcae5d3#.tka93qm3d).
 
+NOTE: Make sure `jcenter()` is one of the repositories mentioned in your build.gradle.
+This used to be the default repository for Android but since then has changed the `google()`
+This needs to be set in your top level build.gradle: `<project root>/build.gradle`
+
+```
+buildscript {
+    repositories {
+        jcenter()
+        ...
+    }
+    ...
+}
+```
+
 ## STEP-1
 
 ### Gradle
 
     dependencies {
-        compile 'com.alimuzaffar.lib:pinentryedittext:1.3.1'
+        compile 'com.alimuzaffar.lib:pinentryedittext:1.3.2'
     }
 
 ## STEP-2
