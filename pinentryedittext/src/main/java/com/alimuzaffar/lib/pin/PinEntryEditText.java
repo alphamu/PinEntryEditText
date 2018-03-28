@@ -50,6 +50,8 @@ import java.util.Locale;
 public class PinEntryEditText extends EditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
+    public static final String DEFAULT_MASK = "\u25CF";
+
     protected String mMask = null;
     protected StringBuilder mMaskChars = null;
     protected String mSingleCharHint = null;
@@ -223,9 +225,9 @@ public class PinEntryEditText extends EditText {
 
         //If input type is password and no mask is set, use a default mask
         if ((getInputType() & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         } else if ((getInputType() & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         }
 
         if (!TextUtils.isEmpty(mMask)) {
@@ -236,6 +238,23 @@ public class PinEntryEditText extends EditText {
         getPaint().getTextBounds("|", 0, 1, mTextHeight);
 
         mAnimate = mAnimatedType > -1;
+    }
+
+    @Override
+    public void setInputType(int type) {
+        super.setInputType(type);
+
+        if ((type & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || (type & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
+            // If input type is password and no mask is set, use a default mask
+            if (TextUtils.isEmpty(mMask)) {
+                setMask(DEFAULT_MASK);
+            }
+        } else {
+            // If input type is not password, remove mask
+            setMask(null);
+        }
+
     }
 
     @Override
