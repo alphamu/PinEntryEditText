@@ -123,6 +123,17 @@ public class PinEntryEditText extends EditText {
         invalidate();
     }
 
+    public void setMask(String mask){
+        mMask = mask;
+        mMaskChars = null;
+        invalidate();
+    }
+
+    public void setSingleCharHint(String hint){
+        mSingleCharHint = hint;
+        invalidate();
+    }
+
     private void init(Context context, AttributeSet attrs) {
         float multi = context.getResources().getDisplayMetrics().density;
         mLineStroke = multi * mLineStroke;
