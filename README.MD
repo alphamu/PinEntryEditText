@@ -42,7 +42,7 @@ buildscript {
 ### Gradle
 
     dependencies {
-        compile 'com.alimuzaffar.lib:pinentryedittext:1.3.2'
+        compile 'com.alimuzaffar.lib:pinentryedittext:1.3.3'
     }
 
 ## STEP-2
