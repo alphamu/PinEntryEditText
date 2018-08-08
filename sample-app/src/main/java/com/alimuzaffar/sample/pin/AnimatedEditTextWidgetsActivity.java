@@ -1,10 +1,11 @@
 package com.alimuzaffar.sample.pin;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AnimatedEditTextWidgetsActivity extends AppCompatActivity {
 
@@ -13,7 +14,7 @@ public class AnimatedEditTextWidgetsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_text);
 
-        final PinEntryEditText pinEntry = (PinEntryEditText) findViewById(R.id.txt_pin_entry);
+        final PinEntryEditText pinEntry = findViewById(R.id.txt_pin_entry);
         if (pinEntry != null) {
             pinEntry.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
                 @Override
@@ -34,7 +35,7 @@ public class AnimatedEditTextWidgetsActivity extends AppCompatActivity {
             });
         }
 
-        final PinEntryEditText pinEntry2 = (PinEntryEditText) findViewById(R.id.txt_pin_entry2);
+        final PinEntryEditText pinEntry2 = findViewById(R.id.txt_pin_entry2);
         if (pinEntry2 != null) {
             pinEntry2.setAnimateText(true);
             pinEntry2.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
