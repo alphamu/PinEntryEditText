@@ -247,7 +247,7 @@ public class PinEntryEditText extends EditText {
         int startX;
         int bottom = getHeight() - getPaddingBottom();
         int rtlFlag;
-        final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
+        final boolean isLayoutRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
         if (isLayoutRtl) {
             rtlFlag = -1;
             startX = (int) (getWidth() - ViewCompat.getPaddingStart(this) - mCharSize);
