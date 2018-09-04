@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText) 
-[![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.4/link)
 
 # PinEntryEditText for Android
 
