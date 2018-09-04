@@ -49,6 +49,8 @@ import androidx.legacy.view.ViewCompat;
 public class PinEntryEditText extends AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
+    public static final String DEFAULT_MASK = "\u25CF";
+
     protected String mMask = null;
     protected StringBuilder mMaskChars = null;
     protected String mSingleCharHint = null;
@@ -113,6 +115,17 @@ public class PinEntryEditText extends AppCompatEditText {
         setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
 
         setText(null);
+        invalidate();
+    }
+
+    public void setMask(String mask){
+        mMask = mask;
+        mMaskChars = null;
+        invalidate();
+    }
+
+    public void setSingleCharHint(String hint){
+        mSingleCharHint = hint;
         invalidate();
     }
 
@@ -205,9 +218,9 @@ public class PinEntryEditText extends AppCompatEditText {
 
         //If input type is password and no mask is set, use a default mask
         if ((getInputType() & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         } else if ((getInputType() & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         }
 
         if (!TextUtils.isEmpty(mMask)) {
@@ -218,6 +231,23 @@ public class PinEntryEditText extends AppCompatEditText {
         getPaint().getTextBounds("|", 0, 1, mTextHeight);
 
         mAnimate = mAnimatedType > -1;
+    }
+
+    @Override
+    public void setInputType(int type) {
+        super.setInputType(type);
+
+        if ((type & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || (type & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
+            // If input type is password and no mask is set, use a default mask
+            if (TextUtils.isEmpty(mMask)) {
+                setMask(DEFAULT_MASK);
+            }
+        } else {
+            // If input type is not password, remove mask
+            setMask(null);
+        }
+
     }
 
     @Override
