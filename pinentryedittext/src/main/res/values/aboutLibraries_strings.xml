@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_pinEntryEditText">owner</string>
+    <string name="library_pinEntryEditText_author">Ali Muzaffar</string>
+    <string name="library_pinEntryEditText_authorWebsite">http://alimuzaffar.com/</string>
+    <string name="library_pinEntryEditText_libraryName">PinEntryEditText</string>
+    <string name="library_pinEntryEditText_libraryDescription">An EditText that looks like a pin entry field. It is highly customisable and even animated text. </string>
+    <string name="library_pinEntryEditText_libraryVersion">1.3.3</string>
+    <string name="library_pinEntryEditText_libraryWebsite">https://github.com/alphamu/PinEntryEditText/</string>
+    <string name="library_pinEntryEditText_licenseId">apache_2_0</string>
+    <string name="library_pinEntryEditText_isOpenSource">true</string>
+    <string name="library_pinEntryEditText_repositoryLink">https://github.com/alphamu/PinEntryEditText/</string>
+    <string name="library_pinEntryEditText_classPath">com.alimuzaffar.lib.pin.PinEntryEditText</string>
+    <!-- Custom variables section -->
+    <string name="library_pinEntryEditText_owner">Ali Muzaffar</string>
+</resources>
