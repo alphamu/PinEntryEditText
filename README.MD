@@ -42,8 +42,15 @@ buildscript {
 ### Gradle
 
     dependencies {
-        compile 'com.alimuzaffar.lib:pinentryedittext:1.3.2'
+        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.4') {
+            exclude group: 'com.android.support', module: 'support-v4'
+            exclude group: 'com.android.support', module: 'appcompat-v7'
+            exclude group: 'com.android.support', module: 'support-v13'
+        }
     }
+
+**Note:** You don't need to exclude all the support groups. However, it's a good idea to do this
+as your code is likely to use a different version from the library.
 
 ## STEP-2
 
