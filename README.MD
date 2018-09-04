@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText) 
-[![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion)
+[![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText)
 
 # PinEntryEditText for Android
 
@@ -40,6 +39,18 @@ buildscript {
 ## STEP-1
 
 ### Gradle
+
+
+**Jetpack** support in version 2.0 [![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion):
+
+    dependencies {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.0-RC1') {
+            exclude group: 'androidx.appcompat', module: 'appcompat'
+            exclude group: 'androidx.legacy', module: 'legacy-support-v13'
+        }
+    }
+
+If you don't use Jetpack, use version 1.3.X [ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.4/link)
 
     dependencies {
         implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.4') {
