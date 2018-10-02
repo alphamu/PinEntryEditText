@@ -44,16 +44,16 @@ buildscript {
 **Jetpack** support in version 2.0 [![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion):
 
     dependencies {
-        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1-RC1') {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1') {
             exclude group: 'androidx.appcompat', module: 'appcompat'
             exclude group: 'androidx.legacy', module: 'legacy-support-v13'
         }
     }
 
-If you don't use Jetpack, use version 1.3.X [ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.4/link)
+If you don't use Jetpack, use version 1.3.X [ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.6/link)
 
     dependencies {
-        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.4') {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.6') {
             exclude group: 'com.android.support', module: 'support-v4'
             exclude group: 'com.android.support', module: 'appcompat-v7'
             exclude group: 'com.android.support', module: 'support-v13'
