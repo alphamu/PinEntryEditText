@@ -46,7 +46,6 @@ buildscript {
     dependencies {
         implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1') {
             exclude group: 'androidx.appcompat', module: 'appcompat'
-            exclude group: 'androidx.legacy', module: 'legacy-support-v13'
         }
     }
 
