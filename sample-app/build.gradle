@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId 'com.alimuzaffar.sample.pin'
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
-        versionName '2.0.0'
+        versionName '2.0.2'
     }
     buildTypes {
         release {
@@ -26,6 +26,8 @@ dependencies {
     implementation fileTree(include: ['*.jar, *.aar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation project(':pinentryedittext')
+    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1') {
+        exclude group: 'androidx.appcompat', module: 'appcompat'
+        exclude group: 'androidx.legacy', module: 'legacy-support-v13'
+    }
 }

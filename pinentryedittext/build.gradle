@@ -12,7 +12,7 @@ ext {
     siteUrl = 'https://github.com/alphamu/PinEntryEditText'
     gitUrl = 'https://github.com/alphamu/PinEntryEditText.git'
 
-    libraryVersion = '2.0.1'
+    libraryVersion = '2.0.2'
 
     developerId = 'alphamu'
     developerName = 'Ali Muzaffar'
@@ -25,13 +25,13 @@ ext {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
-        versionName '2.0.1'
+        versionName '2.0.2'
     }
     buildTypes {
         release {
@@ -48,7 +48,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/alphamu/JCenter/master/installv1.gradle'

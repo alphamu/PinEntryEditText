@@ -44,7 +44,7 @@ import java.util.Locale;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.TextUtilsCompat;
-import androidx.legacy.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 
 public class PinEntryEditText extends AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
