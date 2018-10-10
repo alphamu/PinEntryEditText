@@ -26,8 +26,5 @@ dependencies {
     implementation fileTree(include: ['*.jar, *.aar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1') {
-        exclude group: 'androidx.appcompat', module: 'appcompat'
-        exclude group: 'androidx.legacy', module: 'legacy-support-v13'
-    }
+    implementation project(':pinentryedittext')
 }

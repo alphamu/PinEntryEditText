@@ -44,9 +44,8 @@ buildscript {
 **Jetpack** support in version 2.0 [![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg)](https://bintray.com/alphamu/customwidgets/PinEntryEditText/_latestVersion):
 
     dependencies {
-        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.1') {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.2') {
             exclude group: 'androidx.appcompat', module: 'appcompat'
-            exclude group: 'androidx.legacy', module: 'legacy-support-v13'
         }
     }
 
