@@ -1,13 +1,12 @@
 package com.alimuzaffar.sample.pin;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class AnimatedEditTextWidgetsActivity extends AppCompatActivity {
+public class AnimatedEditTextWidgetsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
