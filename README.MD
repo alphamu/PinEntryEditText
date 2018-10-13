@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText) 
-[ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.7/link)
+[ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.4) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.8/link)
 
 # PinEntryEditText for Android
 
@@ -42,7 +42,7 @@ buildscript {
 ### Gradle
 
     dependencies {
-        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.7') {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.8') {
             // Exclude is only needed in you already have any of
             // the libraries below as a dependency in your app.
             exclude group: 'com.android.support', module: 'support-v4'
