@@ -28,6 +28,7 @@
 
         <com.alimuzaffar.lib.pin.PinEntryEditText
             android:background="@null"
+            android:layoutDirection="ltr"
             android:id="@+id/txt_pin_entry1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
 
         <com.alimuzaffar.lib.pin.PinEntryEditText
             android:background="@null"
+            android:layoutDirection="rtl"
             android:id="@+id/txt_pin_entry2"
             android:layout_width="112dp"
             android:layout_height="16dp"
