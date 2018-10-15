@@ -2,6 +2,9 @@ package com.alimuzaffar.sample.pin;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
@@ -58,6 +61,13 @@ public class AnimatedEditTextWidgetsActivity extends Activity {
                 }
             });
         }
+
+        pinEntry2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pinEntry2.setError(true);
+            }
+        }, 3000);
 
     }
 

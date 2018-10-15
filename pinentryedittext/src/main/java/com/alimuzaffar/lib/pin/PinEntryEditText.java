@@ -458,6 +458,7 @@ public class PinEntryEditText extends AppCompatEditText {
 
     public void setError(boolean hasError) {
         mHasError = hasError;
+        invalidate();
     }
 
     public boolean isError() {
