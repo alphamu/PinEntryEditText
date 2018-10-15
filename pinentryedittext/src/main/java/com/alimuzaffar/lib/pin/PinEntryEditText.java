@@ -498,6 +498,16 @@ public class PinEntryEditText extends AppCompatEditText {
         }
     }
 
+    public void setPinLineColors(ColorStateList colors) {
+        mColorStates = colors;
+        invalidate();
+    }
+
+    public void setPinBackground(Drawable pinBackground) {
+        mPinBackground = pinBackground;
+        invalidate();
+    }
+
     @Override
     protected void onTextChanged(CharSequence text, final int start, int lengthBefore, final int lengthAfter) {
         setError(false);
