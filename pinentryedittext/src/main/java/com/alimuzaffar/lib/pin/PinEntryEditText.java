@@ -40,12 +40,9 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 
-import java.util.Locale;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
-import androidx.core.text.TextUtilsCompat;
 import androidx.core.view.ViewCompat;
 
 public class PinEntryEditText extends AppCompatEditText {
@@ -272,7 +269,7 @@ public class PinEntryEditText extends AppCompatEditText {
         int startX;
         int bottom = getHeight() - getPaddingBottom();
         int rtlFlag;
-        final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
+        final boolean isLayoutRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
         if (isLayoutRtl) {
             rtlFlag = -1;
             startX = (int) (getWidth() - ViewCompat.getPaddingStart(this) - mCharSize);
