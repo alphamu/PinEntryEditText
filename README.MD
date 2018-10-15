@@ -118,6 +118,10 @@ attribute in the xml. If you want to specify the empty and filled states using y
 you can set the `textColor` to transparent and setup your drawable as follows:
 
 ```xml
+<!--
+    Please look at the sample app's bg_pin.xml
+    or bg_pin_round.xml for all available options
+-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Space contains text -->
     <item android:state_focused="true" android:state_checked="true">
@@ -146,7 +150,7 @@ you can set the `textColor` to transparent and setup your drawable as follows:
 </selector>
 ```
 
-Note that in this setup, the size of the drawable will be determined by the `textSize` and and the `pinTextBottomPadding`
+**Note** that in this setup, the size of the drawable will be determined by the `textSize` and and the `pinTextBottomPadding`
 which is the space between the character and the line below (or the bottom of the `pinBackgroundDrawable`).
 For good measure, set `pinAnimationType` to none as well.
 

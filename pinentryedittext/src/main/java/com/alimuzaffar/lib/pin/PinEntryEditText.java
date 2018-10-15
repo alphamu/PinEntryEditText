@@ -446,7 +446,11 @@ public class PinEntryEditText extends AppCompatEditText {
                 mPinBackground.setState(new int[]{android.R.attr.state_focused, android.R.attr.state_checked});
             }
         } else {
-            mPinBackground.setState(new int[]{-android.R.attr.state_focused});
+            if (hasText) {
+                mPinBackground.setState(new int[]{-android.R.attr.state_focused, android.R.attr.state_checked});
+            } else {
+                mPinBackground.setState(new int[]{-android.R.attr.state_focused});
+            }
         }
     }
 
