@@ -26,10 +26,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.v13.view.ViewCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.text.TextUtilsCompat;
-import android.support.v13.view.ViewCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -47,6 +48,8 @@ import java.util.Locale;
 
 public class PinEntryEditText extends AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
+
+    public static final String DEFAULT_MASK = "\u25CF";
 
     protected String mMask = null;
     protected StringBuilder mMaskChars = null;
@@ -112,6 +115,17 @@ public class PinEntryEditText extends AppCompatEditText {
         setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
 
         setText(null);
+        invalidate();
+    }
+
+    public void setMask(String mask) {
+        mMask = mask;
+        mMaskChars = null;
+        invalidate();
+    }
+
+    public void setSingleCharHint(String hint) {
+        mSingleCharHint = hint;
         invalidate();
     }
 
@@ -204,9 +218,9 @@ public class PinEntryEditText extends AppCompatEditText {
 
         //If input type is password and no mask is set, use a default mask
         if ((getInputType() & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         } else if ((getInputType() & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD && TextUtils.isEmpty(mMask)) {
-            mMask = "\u25CF";
+            mMask = DEFAULT_MASK;
         }
 
         if (!TextUtils.isEmpty(mMask)) {
@@ -217,6 +231,23 @@ public class PinEntryEditText extends AppCompatEditText {
         getPaint().getTextBounds("|", 0, 1, mTextHeight);
 
         mAnimate = mAnimatedType > -1;
+    }
+
+    @Override
+    public void setInputType(int type) {
+        super.setInputType(type);
+
+        if ((type & InputType.TYPE_TEXT_VARIATION_PASSWORD) == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || (type & InputType.TYPE_NUMBER_VARIATION_PASSWORD) == InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
+            // If input type is password and no mask is set, use a default mask
+            if (TextUtils.isEmpty(mMask)) {
+                setMask(DEFAULT_MASK);
+            }
+        } else {
+            // If input type is not password, remove mask
+            setMask(null);
+        }
+
     }
 
     @Override
@@ -252,7 +283,7 @@ public class PinEntryEditText extends AppCompatEditText {
             if (mPinBackground != null) {
                 if (mIsDigitSquare) {
                     mLineCoords[i].top = getPaddingTop();
-                    mLineCoords[i].right = startX + mLineCoords[i].height();
+                    mLineCoords[i].right = startX + mLineCoords[i].width();
                 } else {
                     mLineCoords[i].top -= mTextHeight.height() + mTextBottomPadding * 2;
                 }
@@ -264,6 +295,45 @@ public class PinEntryEditText extends AppCompatEditText {
                 startX += rtlFlag * (mCharSize + mSpace);
             }
             mCharBottom[i] = mLineCoords[i].bottom - mTextBottomPadding;
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mIsDigitSquare) {
+            int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+            int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+            int measuredWidth = 0;
+            int measuredHeight = 0;
+            // If we want a square or circle pin box, we might be able
+            // to figure out the dimensions outselves
+            // if width and height are set to wrap_content or match_parent
+            if (widthMode == MeasureSpec.EXACTLY) {
+                measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            } else if (heightMode == MeasureSpec.EXACTLY) {
+                measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+                measuredWidth = (int) ((measuredHeight * mNumChars) + (mSpace * mNumChars - 1));
+            } else if (widthMode == MeasureSpec.AT_MOST) {
+                measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            } else if (heightMode == MeasureSpec.AT_MOST) {
+                measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+                measuredWidth = (int) ((measuredHeight * mNumChars) + (mSpace * mNumChars - 1));
+            } else {
+                // Both unspecific
+                // Try for a width based on our minimum
+                measuredWidth = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
+
+                // Whatever the width ends up being, ask for a height that would let the pie
+                // get as big as it can
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            }
+
+            setMeasuredDimension(
+                    resolveSizeAndState(measuredWidth, widthMeasureSpec, 1), resolveSizeAndState(measuredHeight, heightMeasureSpec, 0));
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
@@ -376,12 +446,17 @@ public class PinEntryEditText extends AppCompatEditText {
                 mPinBackground.setState(new int[]{android.R.attr.state_focused, android.R.attr.state_checked});
             }
         } else {
-            mPinBackground.setState(new int[]{-android.R.attr.state_focused});
+            if (hasText) {
+                mPinBackground.setState(new int[]{-android.R.attr.state_focused, android.R.attr.state_checked});
+            } else {
+                mPinBackground.setState(new int[]{-android.R.attr.state_focused});
+            }
         }
     }
 
     public void setError(boolean hasError) {
         mHasError = hasError;
+        invalidate();
     }
 
     public boolean isError() {
@@ -398,6 +473,27 @@ public class PinEntryEditText extends AppCompatEditText {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(this, 0);
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        super.setTypeface(tf);
+        setCustomTypeface(tf);
+    }
+
+    @Override
+    public void setTypeface(Typeface tf, int style) {
+        super.setTypeface(tf, style);
+        setCustomTypeface(tf);
+    }
+
+    private void setCustomTypeface(Typeface tf) {
+        if (mCharPaint != null) {
+            mCharPaint.setTypeface(tf);
+            mLastCharPaint.setTypeface(tf);
+            mSingleCharPaint.setTypeface(tf);
+            mLinesPaint.setTypeface(tf);
+        }
     }
 
     @Override

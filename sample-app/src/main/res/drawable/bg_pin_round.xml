@@ -21,6 +21,13 @@
             <solid android:color="@android:color/white" />
         </shape>
     </item>
+    <!--Space contains text and not focused -->
+    <item android:state_focused="false" android:state_checked="true">
+        <shape android:shape="oval">
+            <stroke android:width="1dp" android:color="@android:color/holo_green_light" />
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
     <!-- PinEntryEditText is focused -->
     <item android:state_focused="true">
         <shape android:shape="oval">

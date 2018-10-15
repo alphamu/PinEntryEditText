@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,31 +27,49 @@
             android:visibility="visible"
             app:pinLineColors="@color/pin_line_colors" />
 
+        <!--
+        width is 6*48 + 4*5 = 308
+        6 characters
+        48dp width for each character (circle is the same as rect) so same width and height
+        4dp space between each character
+        5 spaces (spaces are usually characters - 1.
+        -->
         <com.alimuzaffar.lib.pin.PinEntryEditText
-            android:background="@null"
             android:id="@+id/txt_pin_entry1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="308dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@null"
             android:cursorVisible="false"
             android:digits="1234567890"
             android:inputType="number"
-            android:maxLength="4"
+            android:maxLength="6"
             android:textIsSelectable="false"
-            android:textSize="20sp"
-            android:visibility="visible"
-            android:layout_marginTop="32dp"
+            android:textSize="24dp"
             app:pinAnimationType="fromBottom"
-            app:pinBackgroundDrawable="@drawable/bg_pin" />
+            app:pinBackgroundDrawable="@drawable/bg_pin"
+            app:pinBackgroundIsSquare="true"
+            app:pinCharacterSpacing="4dp"
+            app:pinTextBottomPadding="16dp"
+            tools:ignore="SpUsage" />
 
+        <!--
+        width is 6*16 + 8*5 = 136
+        6 characters
+        16dp width for each character (circle is the same as rect) so same width and height
+        8dp space between each character
+        5 spaces (spaces are usually characters - 1.
+        -->
         <com.alimuzaffar.lib.pin.PinEntryEditText
-            android:background="@null"
             android:id="@+id/txt_pin_entry2"
-            android:layout_width="112dp"
+            android:layout_width="136dp"
             android:layout_height="16dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:background="@null"
             android:cursorVisible="false"
             android:digits="1234567890"
-            android:layout_marginTop="32dp"
             android:inputType="number"
             android:maxLength="6"
             android:textColor="@android:color/transparent"
@@ -58,24 +77,25 @@
             android:textSize="0px"
             android:visibility="visible"
             app:pinBackgroundDrawable="@drawable/bg_pin_round"
+            app:pinBackgroundIsSquare="true"
             app:pinCharacterSpacing="8dp"
             app:pinLineColors="@color/pin_line_colors"
-            app:pinBackgroundIsSquare="true"
             app:pinTextBottomPadding="4dp" />
 
         <com.alimuzaffar.lib.pin.PinEntryEditText
-            android:background="@null"
             android:id="@+id/txt_pin_entry3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:cursorVisible="false"
             android:layout_marginTop="32dp"
+            android:background="@null"
+            android:cursorVisible="false"
             android:maxLength="10"
             android:textIsSelectable="false"
             android:textSize="20sp"
             android:visibility="visible"
-            app:pinRepeatedHint="#"
+            android:fontFamily="@font/charmonman_regular"
             app:pinCharacterSpacing="6dp"
-            app:pinLineColors="@color/pin_line_colors" />
+            app:pinLineColors="@color/pin_line_colors"
+            app:pinRepeatedHint="#" />
     </LinearLayout>
 </ScrollView>

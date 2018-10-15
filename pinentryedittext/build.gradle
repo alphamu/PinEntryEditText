@@ -14,7 +14,7 @@ ext {
     siteUrl = 'https://github.com/alphamu/PinEntryEditText'
     gitUrl = 'https://github.com/alphamu/PinEntryEditText.git'
 
-    libraryVersion = '1.3.8'
+    libraryVersion = '1.3.9'
 
     developerId = 'alphamu'
     developerName = 'Ali Muzaffar'
@@ -33,7 +33,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
-        versionName '1.3.8'
+        versionName "1.3.9"
     }
     buildTypes {
         release {
