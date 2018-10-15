@@ -38,9 +38,9 @@
             android:id="@+id/txt_pin_entry1"
             android:layout_width="308dp"
             android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
             android:background="@null"
-            android:layout_gravity="center_horizontal"
             android:cursorVisible="false"
             android:digits="1234567890"
             android:inputType="number"
@@ -50,8 +50,8 @@
             app:pinAnimationType="fromBottom"
             app:pinBackgroundDrawable="@drawable/bg_pin"
             app:pinBackgroundIsSquare="true"
-            app:pinTextBottomPadding="16dp"
             app:pinCharacterSpacing="4dp"
+            app:pinTextBottomPadding="16dp"
             tools:ignore="SpUsage" />
 
         <!--
@@ -95,6 +95,7 @@
             android:visibility="visible"
             app:pinCharacterSpacing="6dp"
             app:pinLineColors="@color/pin_line_colors"
+            app:fontFamily="@font/charmonman_regular"
             app:pinRepeatedHint="#" />
     </LinearLayout>
 </ScrollView>
