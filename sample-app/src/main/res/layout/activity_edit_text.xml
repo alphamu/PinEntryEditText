@@ -25,6 +25,7 @@
             android:textIsSelectable="false"
             android:textSize="20sp"
             android:visibility="visible"
+            app:pinCharacterMask=""
             app:pinLineColors="@color/pin_line_colors" />
 
         <!--

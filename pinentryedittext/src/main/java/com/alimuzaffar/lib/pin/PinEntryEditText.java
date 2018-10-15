@@ -391,7 +391,7 @@ public class PinEntryEditText extends AppCompatEditText {
     }
 
     private CharSequence getFullText() {
-        if (mMask == null) {
+        if (TextUtils.isEmpty(mMask)) {
             return getText();
         } else {
             return getMaskChars();
