@@ -36,8 +36,8 @@
         -->
         <com.alimuzaffar.lib.pin.PinEntryEditText
             android:id="@+id/txt_pin_entry1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="308dp"
+            android:layout_height="48dp"
             android:layout_marginTop="32dp"
             android:background="@null"
             android:layout_gravity="center_horizontal"

@@ -118,13 +118,13 @@ public class PinEntryEditText extends AppCompatEditText {
         invalidate();
     }
 
-    public void setMask(String mask){
+    public void setMask(String mask) {
         mMask = mask;
         mMaskChars = null;
         invalidate();
     }
 
-    public void setSingleCharHint(String hint){
+    public void setSingleCharHint(String hint) {
         mSingleCharHint = hint;
         invalidate();
     }
@@ -295,6 +295,45 @@ public class PinEntryEditText extends AppCompatEditText {
                 startX += rtlFlag * (mCharSize + mSpace);
             }
             mCharBottom[i] = mLineCoords[i].bottom - mTextBottomPadding;
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mIsDigitSquare) {
+            int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+            int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+            int measuredWidth = 0;
+            int measuredHeight = 0;
+            // If we want a square or circle pin box, we might be able
+            // to figure out the dimensions outselves
+            // if width and height are set to wrap_content or match_parent
+            if (widthMode == MeasureSpec.EXACTLY) {
+                measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            } else if (heightMode == MeasureSpec.EXACTLY) {
+                measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+                measuredWidth = (int) ((measuredHeight * mNumChars) + (mSpace * mNumChars - 1));
+            } else if (widthMode == MeasureSpec.AT_MOST) {
+                measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            } else if (heightMode == MeasureSpec.AT_MOST) {
+                measuredHeight = MeasureSpec.getSize(heightMeasureSpec);
+                measuredWidth = (int) ((measuredHeight * mNumChars) + (mSpace * mNumChars - 1));
+            } else {
+                // Both unspecific
+                // Try for a width based on our minimum
+                measuredWidth = getPaddingLeft() + getPaddingRight() + getSuggestedMinimumWidth();
+
+                // Whatever the width ends up being, ask for a height that would let the pie
+                // get as big as it can
+                measuredHeight = (int) ((measuredWidth - (mNumChars - 1 * mSpace)) / mNumChars);
+            }
+
+            setMeasuredDimension(
+                    resolveSizeAndState(measuredWidth, widthMeasureSpec, 1), resolveSizeAndState(measuredHeight, heightMeasureSpec, 0));
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
