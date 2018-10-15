@@ -62,13 +62,6 @@ public class AnimatedEditTextWidgetsActivity extends Activity {
             });
         }
 
-        pinEntry2.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pinEntry2.setError(true);
-            }
-        }, 3000);
-
     }
 
 }
