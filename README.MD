@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/alphamu/PinEntryEditText.svg?branch=master)](https://travis-ci.org/alphamu/PinEntryEditText) 
-[ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.9) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.9/link)
+[ ![Download](https://api.bintray.com/packages/alphamu/customwidgets/PinEntryEditText/images/download.svg?version=1.3.10) ](https://bintray.com/alphamu/customwidgets/PinEntryEditText/1.3.10/link)
 
 # PinEntryEditText for Android
 
@@ -42,7 +42,7 @@ buildscript {
 ### Gradle
 
     dependencies {
-        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.9') {
+        implementation ('com.alimuzaffar.lib:pinentryedittext:1.3.10') {
             // Exclude is only needed in you already have any of
             // the libraries below as a dependency in your app.
             exclude group: 'com.android.support', module: 'support-v4'
@@ -77,7 +77,9 @@ as your code is likely to use a different version from the library.
 	app:pinLineStroke="2dp" //the stroke (height) of the bottom line by default.
 	app:pinLineStrokeSelected="4dp" //the stroke (height) of the bottom line when field is focused.
 	app:pinBackgroundIsSquare="true|false" //optional, if you want the background drawable to be a square or circle width of each digit will be set to match the height of the widget.
-    app:pinLineColors="@color/pin_line_colors" /> //optional
+    app:pinLineColors="@color/pin_line_colors" //optional
+    android:layoutDirection="rtl|ltr"
+    />
 ```
 
 ### Listen for pin entry

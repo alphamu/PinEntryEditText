@@ -30,7 +30,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v13.view.ViewCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -43,8 +42,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
-
-import java.util.Locale;
 
 public class PinEntryEditText extends AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
@@ -270,7 +267,7 @@ public class PinEntryEditText extends AppCompatEditText {
         int startX;
         int bottom = getHeight() - getPaddingBottom();
         int rtlFlag;
-        final boolean isLayoutRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == ViewCompat.LAYOUT_DIRECTION_RTL;
+        final boolean isLayoutRtl = ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
         if (isLayoutRtl) {
             rtlFlag = -1;
             startX = (int) (getWidth() - ViewCompat.getPaddingStart(this) - mCharSize);
@@ -389,7 +386,7 @@ public class PinEntryEditText extends AppCompatEditText {
     }
 
     private CharSequence getFullText() {
-        if (mMask == null) {
+        if (TextUtils.isEmpty(mMask)) {
             return getText();
         } else {
             return getMaskChars();
@@ -494,6 +491,16 @@ public class PinEntryEditText extends AppCompatEditText {
             mSingleCharPaint.setTypeface(tf);
             mLinesPaint.setTypeface(tf);
         }
+    }
+
+    public void setPinLineColors(ColorStateList colors) {
+        mColorStates = colors;
+        invalidate();
+    }
+
+    public void setPinBackground(Drawable pinBackground) {
+        mPinBackground = pinBackground;
+        invalidate();
     }
 
     @Override
