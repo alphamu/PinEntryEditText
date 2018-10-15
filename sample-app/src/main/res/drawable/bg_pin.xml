@@ -5,12 +5,14 @@
     <item android:state_active="true">
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="@android:color/holo_red_dark" />
+            <corners android:radius="8dp" />
             <solid android:color="@android:color/holo_red_dark" />
         </shape>
     </item>
     <item android:state_checked="true" android:state_focused="true">
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="@android:color/holo_green_light" />
+            <corners android:radius="8dp" />
             <solid android:color="#CCCCCC" />
         </shape>
     </item>
@@ -18,6 +20,7 @@
     <item android:state_focused="true" android:state_selected="true">
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="@android:color/holo_green_light" />
+            <corners android:radius="8dp" />
             <solid android:color="@android:color/white" />
         </shape>
     </item>
@@ -25,12 +28,14 @@
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <stroke android:width="2dp" android:color="#CCCCCC" />
+            <corners android:radius="8dp" />
             <solid android:color="@android:color/white" />
         </shape>
     </item>
     <!-- PinEntryEditText is not focused -->
     <item>
         <shape android:shape="rectangle">
+            <corners android:radius="8dp" />
             <solid android:color="@android:color/darker_gray" />
         </shape>
     </item>

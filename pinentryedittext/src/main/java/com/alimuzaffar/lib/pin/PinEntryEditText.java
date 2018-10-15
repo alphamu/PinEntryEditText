@@ -283,7 +283,7 @@ public class PinEntryEditText extends AppCompatEditText {
             if (mPinBackground != null) {
                 if (mIsDigitSquare) {
                     mLineCoords[i].top = getPaddingTop();
-                    mLineCoords[i].right = startX + mLineCoords[i].height();
+                    mLineCoords[i].right = startX + mLineCoords[i].width();
                 } else {
                     mLineCoords[i].top -= mTextHeight.height() + mTextBottomPadding * 2;
                 }
