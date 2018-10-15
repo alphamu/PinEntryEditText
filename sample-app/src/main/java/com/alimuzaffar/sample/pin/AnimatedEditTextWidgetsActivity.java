@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.alimuzaffar.lib.pin.PinEntryEditText;
 
+import androidx.core.content.res.ResourcesCompat;
+
 public class AnimatedEditTextWidgetsActivity extends Activity {
 
     @Override
@@ -15,6 +17,7 @@ public class AnimatedEditTextWidgetsActivity extends Activity {
 
         final PinEntryEditText pinEntry = findViewById(R.id.txt_pin_entry);
         if (pinEntry != null) {
+            pinEntry.setTypeface(ResourcesCompat.getFont(this, R.font.charmonman_regular));
             pinEntry.setOnPinEnteredListener(new PinEntryEditText.OnPinEnteredListener() {
                 @Override
                 public void onPinEntered(CharSequence str) {

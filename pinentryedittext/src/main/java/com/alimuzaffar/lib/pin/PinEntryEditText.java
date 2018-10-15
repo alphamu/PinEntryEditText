@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -41,6 +42,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.TextUtilsCompat;
@@ -472,6 +474,27 @@ public class PinEntryEditText extends AppCompatEditText {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext()
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(this, 0);
+    }
+
+    @Override
+    public void setTypeface(@Nullable Typeface tf) {
+        super.setTypeface(tf);
+        setCustomTypeface(tf);
+    }
+
+    @Override
+    public void setTypeface(@Nullable Typeface tf, int style) {
+        super.setTypeface(tf, style);
+        setCustomTypeface(tf);
+    }
+
+    private void setCustomTypeface(@Nullable Typeface tf) {
+        if (mCharPaint != null) {
+            mCharPaint.setTypeface(tf);
+            mLastCharPaint.setTypeface(tf);
+            mSingleCharPaint.setTypeface(tf);
+            mLinesPaint.setTypeface(tf);
+        }
     }
 
     @Override

@@ -93,9 +93,9 @@
             android:textIsSelectable="false"
             android:textSize="20sp"
             android:visibility="visible"
+            android:fontFamily="@font/charmonman_regular"
             app:pinCharacterSpacing="6dp"
             app:pinLineColors="@color/pin_line_colors"
-            app:fontFamily="@font/charmonman_regular"
             app:pinRepeatedHint="#" />
     </LinearLayout>
 </ScrollView>
