@@ -61,6 +61,8 @@ public class PinEntryEditText extends AppCompatEditText {
     protected int mMaxLength = 4;
     protected RectF[] mLineCoords;
     protected float[] mCharBottom;
+    protected int mWidth = 0;
+    protected int mHeight = 0;
     protected Paint mCharPaint;
     protected Paint mLastCharPaint;
     protected Paint mSingleCharPaint;
@@ -112,8 +114,10 @@ public class PinEntryEditText extends AppCompatEditText {
         mNumChars = maxLength;
 
         setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
-
         setText(null);
+       
+        onSizeChanged(mWidth, mHeight , mWidth, mHeight);
+
         invalidate();
     }
 
@@ -251,6 +255,8 @@ public class PinEntryEditText extends AppCompatEditText {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        mWidth = w;
+        mHeight = h;
         super.onSizeChanged(w, h, oldw, oldh);
         mOriginalTextColors = getTextColors();
         if (mOriginalTextColors != null) {
