@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -77,6 +78,7 @@ public class PinEntryEditText extends AppCompatEditText {
     protected Paint mLinesPaint;
     protected boolean mAnimate = false;
     protected boolean mHasError = false;
+    protected boolean mHideLastChar = false;
     protected ColorStateList mOriginalTextColors;
     protected int[][] mStates = new int[][]{
             new int[]{android.R.attr.state_selected}, // selected
@@ -93,6 +95,7 @@ public class PinEntryEditText extends AppCompatEditText {
     };
 
     protected ColorStateList mColorStates = new ColorStateList(mStates, mColors);
+    private Handler mLastCharTimer = new Handler();
 
     public PinEntryEditText(Context context) {
         super(context);
@@ -404,8 +407,9 @@ public class PinEntryEditText extends AppCompatEditText {
         String text = getText().toString();
         mMaskChars.delete(0, mMaskChars.length());
         for (int i = 0; i < text.length(); i++) {
-            if (mShouldSkipMaskLastChar && isFocused() && i == text.length() - 1) {
+            if (mShouldSkipMaskLastChar && !mHideLastChar && isFocused() && i == text.length() - 1) {
                 mMaskChars.append(text.charAt(i));
+                startLastCharTimer();
             } else {
                 mMaskChars.append(mMask);
             }
@@ -413,6 +417,16 @@ public class PinEntryEditText extends AppCompatEditText {
         return mMaskChars;
     }
 
+    private void startLastCharTimer() {
+        mLastCharTimer.removeCallbacksAndMessages(null);
+        mLastCharTimer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHideLastChar = true;
+                if (mShouldSkipMaskLastChar) invalidate();
+            }
+        }, 800);
+    }
 
     private int getColorForState(int... states) {
         return mColorStates.getColorForState(states, Color.GRAY);
@@ -523,13 +537,12 @@ public class PinEntryEditText extends AppCompatEditText {
             return;
         }
 
-        boolean shouldAnimateDeletion = mShouldSkipMaskLastChar && !TextUtils.isEmpty(mMask);
-        if (lengthAfter > lengthBefore || (shouldAnimateDeletion && lengthAfter < lengthBefore)) {
+        mHideLastChar = lengthAfter < lengthBefore;
+        if (lengthAfter > lengthBefore) {
             if (mAnimatedType == 0) {
                 animatePopIn();
             } else {
-                int startIndex = lengthAfter < lengthBefore ? start - 1 : start;
-                animateBottomUp(text, startIndex);
+                animateBottomUp(text, start);
             }
         }
     }
