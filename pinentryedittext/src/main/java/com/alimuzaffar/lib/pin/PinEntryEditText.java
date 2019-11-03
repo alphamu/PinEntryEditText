@@ -67,6 +67,7 @@ public class PinEntryEditText extends AppCompatEditText {
     protected Drawable mPinBackground;
     protected Rect mTextHeight = new Rect();
     protected boolean mIsDigitSquare = false;
+    protected boolean mShouldSkipMaskLastChar = false;
 
     protected OnClickListener mClickListener;
     protected OnPinEnteredListener mOnPinEnteredListener = null;
@@ -148,6 +149,7 @@ public class PinEntryEditText extends AppCompatEditText {
             mTextBottomPadding = ta.getDimension(R.styleable.PinEntryEditText_pinTextBottomPadding, mTextBottomPadding);
             mIsDigitSquare = ta.getBoolean(R.styleable.PinEntryEditText_pinBackgroundIsSquare, mIsDigitSquare);
             mPinBackground = ta.getDrawable(R.styleable.PinEntryEditText_pinBackgroundDrawable);
+            mShouldSkipMaskLastChar = ta.getBoolean(R.styleable.PinEntryEditText_pinSkipMaskLastChar, mShouldSkipMaskLastChar);
             ColorStateList colors = ta.getColorStateList(R.styleable.PinEntryEditText_pinLineColors);
             if (colors != null) {
                 mColorStates = colors;
@@ -399,12 +401,13 @@ public class PinEntryEditText extends AppCompatEditText {
         if (mMaskChars == null) {
             mMaskChars = new StringBuilder();
         }
-        int textLength = getText().length();
-        while (mMaskChars.length() != textLength) {
-            if (mMaskChars.length() < textLength) {
-                mMaskChars.append(mMask);
+        String text = getText().toString();
+        mMaskChars.delete(0, mMaskChars.length());
+        for (int i = 0; i < text.length(); i++) {
+            if (mShouldSkipMaskLastChar && isFocused() && i == text.length() - 1) {
+                mMaskChars.append(text.charAt(i));
             } else {
-                mMaskChars.deleteCharAt(mMaskChars.length() - 1);
+                mMaskChars.append(mMask);
             }
         }
         return mMaskChars;
@@ -520,11 +523,13 @@ public class PinEntryEditText extends AppCompatEditText {
             return;
         }
 
-        if (lengthAfter > lengthBefore) {
+        boolean shouldAnimateDeletion = mShouldSkipMaskLastChar && !TextUtils.isEmpty(mMask);
+        if (lengthAfter > lengthBefore || (shouldAnimateDeletion && lengthAfter < lengthBefore)) {
             if (mAnimatedType == 0) {
                 animatePopIn();
             } else {
-                animateBottomUp(text, start);
+                int startIndex = lengthAfter < lengthBefore ? start - 1 : start;
+                animateBottomUp(text, startIndex);
             }
         }
     }
