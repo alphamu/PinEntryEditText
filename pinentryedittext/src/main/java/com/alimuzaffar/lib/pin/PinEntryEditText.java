@@ -28,6 +28,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -49,6 +51,7 @@ public class PinEntryEditText extends AppCompatEditText {
     private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
     public static final String DEFAULT_MASK = "\u25CF";
+    public static final int HIDE_LAST_CHAR_MILLIS = 600;
 
     protected String mMask = null;
     protected StringBuilder mMaskChars = null;
@@ -67,6 +70,7 @@ public class PinEntryEditText extends AppCompatEditText {
     protected Drawable mPinBackground;
     protected Rect mTextHeight = new Rect();
     protected boolean mIsDigitSquare = false;
+    protected boolean mShouldSkipMaskLastChar = false;
 
     protected OnClickListener mClickListener;
     protected OnPinEnteredListener mOnPinEnteredListener = null;
@@ -76,6 +80,7 @@ public class PinEntryEditText extends AppCompatEditText {
     protected Paint mLinesPaint;
     protected boolean mAnimate = false;
     protected boolean mHasError = false;
+    protected boolean mHideLastChar = false;
     protected ColorStateList mOriginalTextColors;
     protected int[][] mStates = new int[][]{
             new int[]{android.R.attr.state_selected}, // selected
@@ -92,6 +97,7 @@ public class PinEntryEditText extends AppCompatEditText {
     };
 
     protected ColorStateList mColorStates = new ColorStateList(mStates, mColors);
+    private Handler mLastCharTimer = new Handler(Looper.getMainLooper());
 
     public PinEntryEditText(Context context) {
         super(context);
@@ -148,6 +154,7 @@ public class PinEntryEditText extends AppCompatEditText {
             mTextBottomPadding = ta.getDimension(R.styleable.PinEntryEditText_pinTextBottomPadding, mTextBottomPadding);
             mIsDigitSquare = ta.getBoolean(R.styleable.PinEntryEditText_pinBackgroundIsSquare, mIsDigitSquare);
             mPinBackground = ta.getDrawable(R.styleable.PinEntryEditText_pinBackgroundDrawable);
+            mShouldSkipMaskLastChar = ta.getBoolean(R.styleable.PinEntryEditText_pinSkipMaskLastChar, mShouldSkipMaskLastChar);
             ColorStateList colors = ta.getColorStateList(R.styleable.PinEntryEditText_pinLineColors);
             if (colors != null) {
                 mColorStates = colors;
@@ -399,17 +406,29 @@ public class PinEntryEditText extends AppCompatEditText {
         if (mMaskChars == null) {
             mMaskChars = new StringBuilder();
         }
-        int textLength = getText().length();
-        while (mMaskChars.length() != textLength) {
-            if (mMaskChars.length() < textLength) {
-                mMaskChars.append(mMask);
+        String text = getText().toString();
+        mMaskChars.delete(0, mMaskChars.length());
+        for (int i = 0; i < text.length(); i++) {
+            if (mShouldSkipMaskLastChar && !mHideLastChar && isFocused() && i == text.length() - 1) {
+                mMaskChars.append(text.charAt(i));
             } else {
-                mMaskChars.deleteCharAt(mMaskChars.length() - 1);
+                mMaskChars.append(mMask);
             }
         }
         return mMaskChars;
     }
 
+    private void startLastCharTimerIfNeeded() {
+        if (!mShouldSkipMaskLastChar) return;
+        mLastCharTimer.removeCallbacksAndMessages(null);
+        mLastCharTimer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mHideLastChar = true;
+                if (mShouldSkipMaskLastChar) invalidate();
+            }
+        }, HIDE_LAST_CHAR_MILLIS);
+    }
 
     private int getColorForState(int... states) {
         return mColorStates.getColorForState(states, Color.GRAY);
@@ -508,15 +527,18 @@ public class PinEntryEditText extends AppCompatEditText {
     @Override
     protected void onTextChanged(CharSequence text, final int start, int lengthBefore, final int lengthAfter) {
         setError(false);
+        mHideLastChar = lengthAfter < lengthBefore;
         if (mLineCoords == null || !mAnimate) {
             if (mOnPinEnteredListener != null && text.length() == mMaxLength) {
                 mOnPinEnteredListener.onPinEntered(text);
             }
+            startLastCharTimerIfNeeded();
             return;
         }
 
         if (mAnimatedType == -1) {
             invalidate();
+            startLastCharTimerIfNeeded();
             return;
         }
 
@@ -540,32 +562,34 @@ public class PinEntryEditText extends AppCompatEditText {
                 PinEntryEditText.this.invalidate();
             }
         });
-        if (getText().length() == mMaxLength && mOnPinEnteredListener != null) {
-            va.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                }
+        va.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (getText().length() == mMaxLength && mOnPinEnteredListener != null) {
                     mOnPinEnteredListener.onPinEntered(getText());
                 }
+                startLastCharTimerIfNeeded();
+            }
 
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
-        }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
         va.start();
     }
 
-    private void animateBottomUp(CharSequence text, final int start) {
+    private void animateBottomUp(final CharSequence text, final int start) {
         mCharBottom[start] = mLineCoords[start].bottom - mTextBottomPadding;
-        ValueAnimator animUp = ValueAnimator.ofFloat(mCharBottom[start] + getPaint().getTextSize(), mCharBottom[start]);
+        final ValueAnimator animUp = ValueAnimator.ofFloat(mCharBottom[start] + getPaint().getTextSize(), mCharBottom[start]);
         animUp.setDuration(300);
         animUp.setInterpolator(new OvershootInterpolator());
         animUp.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -578,7 +602,7 @@ public class PinEntryEditText extends AppCompatEditText {
         });
 
         mLastCharPaint.setAlpha(255);
-        ValueAnimator animAlpha = ValueAnimator.ofInt(0, 255);
+        final ValueAnimator animAlpha = ValueAnimator.ofInt(0, 255);
         animAlpha.setDuration(300);
         animAlpha.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -588,29 +612,30 @@ public class PinEntryEditText extends AppCompatEditText {
             }
         });
 
-        AnimatorSet set = new AnimatorSet();
-        if (text.length() == mMaxLength && mOnPinEnteredListener != null) {
-            set.addListener(new Animator.AnimatorListener() {
+        final AnimatorSet set = new AnimatorSet();
+        set.addListener(new Animator.AnimatorListener() {
 
-                @Override
-                public void onAnimationStart(Animator animation) {
-                }
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (text.length() == mMaxLength && mOnPinEnteredListener != null) {
                     mOnPinEnteredListener.onPinEntered(getText());
                 }
+                startLastCharTimerIfNeeded();
+            }
 
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationRepeat(Animator animation) {
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
-                }
-            });
-        }
+            }
+        });
         set.playTogether(animUp, animAlpha);
         set.start();
     }

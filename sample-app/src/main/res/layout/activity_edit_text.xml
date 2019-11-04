@@ -43,7 +43,7 @@
             android:background="@null"
             android:cursorVisible="false"
             android:digits="1234567890"
-            android:inputType="number"
+            android:inputType="numberPassword"
             android:maxLength="6"
             android:textIsSelectable="false"
             android:textSize="24dp"
@@ -51,6 +51,7 @@
             app:pinBackgroundDrawable="@drawable/bg_pin"
             app:pinBackgroundIsSquare="true"
             app:pinCharacterSpacing="4dp"
+            app:pinSkipMaskLastChar="true"
             app:pinTextBottomPadding="16dp"
             tools:ignore="SpUsage" />
 

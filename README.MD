@@ -90,6 +90,7 @@ as your code is likely to use a different version from the library.
 	app:pinLineStrokeSelected="4dp" //the stroke (height) of the bottom line when field is focused.
 	app:pinBackgroundIsSquare="true|false" //optional, if you want the background drawable to be a square or circle width of each digit will be set to match the height of the widget.
     app:pinLineColors="@color/pin_line_colors" //optional
+    app:pinSkipMaskLastChar="false" // optional, default false, if you want to show the last typed digit without the mask set it to "true"
     android:layoutDirection="ltr|rtl"
     />
 ```
