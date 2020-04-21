@@ -21,7 +21,6 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.*;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -34,10 +33,9 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
-import java.lang.reflect.Field;
-
 public class PinEntryEditText extends AppCompatEditText {
 
+    private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
     private static final int DEFAULT_MAX_LENGTH = 4;
     public static final String DEFAULT_MASK = "\u25CF";
 
@@ -167,7 +165,7 @@ public class PinEntryEditText extends AppCompatEditText {
 
         setBackgroundResource(0);
 
-        mMaxLength = getMaxLength();
+        mMaxLength = getAndroidAttributeIntValue(attrs, "maxLength", DEFAULT_MAX_LENGTH);
         mNumChars = mMaxLength;
 
         //Disable copy paste
@@ -223,24 +221,13 @@ public class PinEntryEditText extends AppCompatEditText {
         mAnimate = mAnimatedType > -1;
     }
 
-    private int getMaxLength() {
-        for (InputFilter filter : getFilters()) {
-            if (filter instanceof InputFilter.LengthFilter) {
-                InputFilter.LengthFilter lengthFilter = ((InputFilter.LengthFilter) filter);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    return lengthFilter.getMax();
-                } else {
-                    try {
-                        Field max = InputFilter.LengthFilter.class.getDeclaredField("mMax");
-                        max.setAccessible(true);
-                        return (int) max.get(lengthFilter);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+    private int getAndroidAttributeIntValue(AttributeSet attrs, String attributeName, int defaultValue) {
+        int resId = attrs.getAttributeResourceValue(XML_NAMESPACE_ANDROID, attributeName, -1);
+        if (resId > 0) {
+            return getResources().getInteger(resId);
+        } else {
+            return attrs.getAttributeIntValue(XML_NAMESPACE_ANDROID, attributeName, defaultValue);
         }
-        return DEFAULT_MAX_LENGTH;
     }
 
     @Override
