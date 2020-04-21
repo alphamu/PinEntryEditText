@@ -15,28 +15,16 @@
  */
 package com.alimuzaffar.lib.pin;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ValueAnimator;
+import android.animation.*;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Typeface;
+import android.graphics.*;
 import android.graphics.drawable.Drawable;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.TextUtils;
+import android.text.*;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.InputMethodManager;
 
@@ -46,8 +34,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
 public class PinEntryEditText extends AppCompatEditText {
-    private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
 
+    private static final String XML_NAMESPACE_ANDROID = "http://schemas.android.com/apk/res/android";
+    private static final int DEFAULT_MAX_LENGTH = 4;
     public static final String DEFAULT_MASK = "\u25CF";
 
     protected String mMask = null;
@@ -56,9 +45,9 @@ public class PinEntryEditText extends AppCompatEditText {
     protected int mAnimatedType = 0;
     protected float mSpace = 24; //24 dp by default, space between the lines
     protected float mCharSize;
-    protected float mNumChars = 4;
+    protected float mNumChars = DEFAULT_MAX_LENGTH;
     protected float mTextBottomPadding = 8; //8dp by default, height of the text from our lines
-    protected int mMaxLength = 4;
+    protected int mMaxLength = DEFAULT_MAX_LENGTH;
     protected RectF[] mLineCoords;
     protected float[] mCharBottom;
     protected Paint mCharPaint;
@@ -176,7 +165,7 @@ public class PinEntryEditText extends AppCompatEditText {
 
         setBackgroundResource(0);
 
-        mMaxLength = attrs.getAttributeIntValue(XML_NAMESPACE_ANDROID, "maxLength", 4);
+        mMaxLength = getAndroidAttributeIntValue(attrs, "maxLength", DEFAULT_MAX_LENGTH);
         mNumChars = mMaxLength;
 
         //Disable copy paste
@@ -230,6 +219,15 @@ public class PinEntryEditText extends AppCompatEditText {
         getPaint().getTextBounds("|", 0, 1, mTextHeight);
 
         mAnimate = mAnimatedType > -1;
+    }
+
+    private int getAndroidAttributeIntValue(AttributeSet attrs, String attributeName, int defaultValue) {
+        int resId = attrs.getAttributeResourceValue(XML_NAMESPACE_ANDROID, attributeName, -1);
+        if (resId > 0) {
+            return getResources().getInteger(resId);
+        } else {
+            return attrs.getAttributeIntValue(XML_NAMESPACE_ANDROID, attributeName, defaultValue);
+        }
     }
 
     @Override

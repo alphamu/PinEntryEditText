@@ -44,7 +44,7 @@
             android:cursorVisible="false"
             android:digits="1234567890"
             android:inputType="number"
-            android:maxLength="6"
+            android:maxLength="@integer/pin_length"
             android:textIsSelectable="false"
             android:textSize="24dp"
             app:pinAnimationType="fromBottom"
