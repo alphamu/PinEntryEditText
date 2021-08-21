@@ -28,7 +28,7 @@ sudo: false
 before_install:
 - export ANDROID_HOME=/usr/local/android-sdk
 - echo "sdk.dir=$ANDROID_HOME" > local.properties
-script: 'travis_retry ./gradlew assembleRelease'
+script: ' ./gradlew assembleRelease'
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
