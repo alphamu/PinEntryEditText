@@ -622,6 +622,18 @@ public class PinEntryEditText extends AppCompatEditText {
     public void setOnPinEnteredListener(OnPinEnteredListener l) {
         mOnPinEnteredListener = l;
     }
+    
+    @Override
+    public void setTextColor(ColorStateList colors) {
+        super.setTextColor(colors);
+        mOriginalTextColors = colors;
+        if (mOriginalTextColors != null && mLastCharPaint != null &&
+                mCharPaint != null && mSingleCharPaint != null) {
+            mLastCharPaint.setColor(mOriginalTextColors.getDefaultColor());
+            mCharPaint.setColor(mOriginalTextColors.getDefaultColor());
+            mSingleCharPaint.setColor(getCurrentHintTextColor());
+        }
+    }
 
     public interface OnPinEnteredListener {
         void onPinEntered(CharSequence str);
